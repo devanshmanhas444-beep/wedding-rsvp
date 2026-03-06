@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Wedding RSVP</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f5f5f5;
+    text-align:center;
+}
+
+.container{
+    background:white;
+    width:350px;
+    margin:100px auto;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0px 0px 10px gray;
+}
+
+input,button{
+    width:90%;
+    padding:10px;
+    margin:10px;
+}
+
+button{
+    background:#e91e63;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Wedding RSVP</h2>
+
+<form id="rsvpForm">
+
+<input type="text" id="name" placeholder="Your Name" required>
+
+<input type="number" id="people" placeholder="Number of People Joining" required>
+
+<button type="submit">Submit</button>
+
+</form>
+
+<p id="message"></p>
+
+</div>
+
+<script>
+
+document.getElementById("rsvpForm").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+let name = document.getElementById("name").value;
+let people = document.getElementById("people").value;
+
+let data = JSON.parse(localStorage.getItem("rsvp")) || [];
+
+data.push({name:name, people:people});
+
+localStorage.setItem("rsvp", JSON.stringify(data));
+
+document.getElementById("message").innerText = "Thank you! Your response has been recorded.";
+
+document.getElementById("rsvpForm").reset();
+
+});
+
+</script>
+
+</body>
+</html>
