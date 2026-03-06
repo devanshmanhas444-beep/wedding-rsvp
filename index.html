@@ -4,11 +4,12 @@
 <head>
 <title>Wedding RSVP</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 
 body{
 font-family: Arial;
-text-align:center;
 margin:0;
 height:100vh;
 
@@ -17,38 +18,51 @@ background-size: contain;
 background-position: center;
 background-repeat: no-repeat;
 background-color: black;
+
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
+/* RSVP BOX */
+
 .box{
-background: rgba(255,255,255,0.9);
-width:350px;
-margin:120px auto;
-padding:30px;
-border-radius:12px;
-box-shadow:0 0 15px rgba(0,0,0,0.3);
+background: rgba(255,255,255,0.92);
+width:90%;
+max-width:420px;
+padding:40px;
+border-radius:14px;
+box-shadow:0 0 20px rgba(0,0,0,0.35);
+text-align:center;
 }
 
 h2{
-margin-bottom:20px;
+margin-bottom:25px;
+font-size:28px;
 }
+
+/* INPUTS */
 
 input{
-width:90%;
-padding:10px;
-margin:10px;
-border-radius:5px;
+width:100%;
+padding:14px;
+margin:12px 0;
+border-radius:6px;
 border:1px solid #ccc;
+font-size:16px;
 }
 
+/* BUTTON */
+
 button{
-width:95%;
-padding:12px;
-margin-top:10px;
+width:100%;
+padding:14px;
+margin-top:15px;
 background:#e91e63;
 color:white;
 border:none;
-border-radius:5px;
-font-size:16px;
+border-radius:6px;
+font-size:18px;
 cursor:pointer;
 }
 
@@ -60,6 +74,7 @@ background:#d81b60;
 margin-top:15px;
 font-weight:bold;
 color:green;
+font-size:16px;
 }
 
 </style>
@@ -86,8 +101,8 @@ color:green;
 
 function send(){
 
-var name = document.getElementById("name").value;
-var people = document.getElementById("people").value;
+var name=document.getElementById("name").value;
+var people=document.getElementById("people").value;
 
 fetch("https://script.google.com/macros/s/AKfycby-kbv-Rw9SI0MH6p68MAZcUJtKuCRmeeiAGOtFR9ZkTFaEX-rcUnB_pxiesFKPq18/exec",{
 method:"POST",
