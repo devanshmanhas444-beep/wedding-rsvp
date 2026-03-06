@@ -1,80 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>Wedding RSVP</title>
 
 <style>
+
 body{
-    font-family: Arial;
-    background:#f5f5f5;
-    text-align:center;
+font-family:Arial;
+background:#f5f5f5;
+text-align:center;
 }
 
-.container{
-    background:white;
-    width:350px;
-    margin:100px auto;
-    padding:30px;
-    border-radius:10px;
-    box-shadow:0px 0px 10px gray;
+.box{
+background:white;
+width:350px;
+margin:120px auto;
+padding:30px;
+border-radius:10px;
+box-shadow:0 0 10px gray;
 }
 
 input,button{
-    width:90%;
-    padding:10px;
-    margin:10px;
+width:90%;
+padding:10px;
+margin:10px;
 }
 
 button{
-    background:#e91e63;
-    color:white;
-    border:none;
-    cursor:pointer;
+background:#e91e63;
+color:white;
+border:none;
+cursor:pointer;
 }
+
 </style>
 
 </head>
 
 <body>
 
-<div class="container">
+<div class="box">
 
 <h2>Wedding RSVP</h2>
 
-<form id="rsvpForm">
+<input type="text" id="name" placeholder="Your Name">
 
-<input type="text" id="name" placeholder="Your Name" required>
+<input type="number" id="people" placeholder="Number of people joining">
 
-<input type="number" id="people" placeholder="Number of People Joining" required>
+<button onclick="send()">Submit</button>
 
-<button type="submit">Submit</button>
-
-</form>
-
-<p id="message"></p>
+<p id="msg"></p>
 
 </div>
 
 <script>
 
-document.getElementById("rsvpForm").addEventListener("submit", function(e){
+function send(){
 
-e.preventDefault();
+var name=document.getElementById("name").value;
+var people=document.getElementById("people").value;
 
-let name = document.getElementById("name").value;
-let people = document.getElementById("people").value;
-
-let data = JSON.parse(localStorage.getItem("rsvp")) || [];
-
-data.push({name:name, people:people});
-
-localStorage.setItem("rsvp", JSON.stringify(data));
-
-document.getElementById("message").innerText = "Thank you! Your response has been recorded.";
-
-document.getElementById("rsvpForm").reset();
-
+fetch("https://script.google.com/macros/s/AKfycby-kbv-Rw9SI0MH6p68MAZcUJtKuCRmeeiAGOtFR9ZkTFaEX-rcUnB_pxiesFKPq18/exec",{
+method:"POST",
+body:new URLSearchParams({
+"name":name,
+"people":people
+})
+})
+.then(res=>res.text())
+.then(data=>{
+document.getElementById("msg").innerHTML="Thank you! Your response has been recorded.";
 });
+
+}
 
 </script>
 
