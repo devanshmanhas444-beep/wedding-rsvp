@@ -3,30 +3,27 @@
 
 <head>
 <title>Wedding RSVP</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 
 body{
 margin:0;
-font-family: Arial;
+font-family:Arial;
 height:100vh;
 
-background-image: url("background.jpeg");
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
+background-image:url("background.jpeg");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
 
 display:flex;
 justify-content:center;
 align-items:center;
 }
 
-/* RSVP box */
-
 .box{
-background: rgba(255,255,255,0.9);
+background:rgba(255,255,255,0.92);
 width:90%;
 max-width:420px;
 padding:40px;
@@ -35,74 +32,114 @@ box-shadow:0 10px 30px rgba(0,0,0,0.4);
 text-align:center;
 }
 
-/* title */
-
 h2{
-font-size:28px;
 margin-bottom:20px;
 }
 
-/* inputs */
-
 input{
 width:100%;
-padding:15px;
+padding:14px;
 margin:10px 0;
 border-radius:6px;
 border:1px solid #ccc;
 font-size:16px;
 }
 
-/* button */
-
 button{
 width:100%;
-padding:15px;
-margin-top:15px;
-background:#e91e63;
-color:white;
+padding:14px;
+margin-top:10px;
 border:none;
 border-radius:6px;
-font-size:18px;
+font-size:16px;
 cursor:pointer;
 }
 
-button:hover{
-background:#d81b60;
+.yes{
+background:#4CAF50;
+color:white;
+}
+
+.no{
+background:#f44336;
+color:white;
+}
+
+.submit{
+background:#e91e63;
+color:white;
 }
 
 #msg{
-margin-top:15px;
+margin-top:20px;
+font-size:18px;
 font-weight:bold;
-color:green;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <div class="box">
 
-<h2>Wedding RSVP</h2>
+<!-- STEP 1 -->
+
+<div id="step1">
+<h2>Are you coming to the wedding on May 3rd? 💍</h2>
+
+<button class="yes" onclick="coming()">Yes, I'll be there!</button>
+<button class="no" onclick="notcoming()">Sadly no 😢</button>
+
+</div>
+
+<!-- STEP 2 -->
+
+<div id="step2" style="display:none">
+
+<h2>Awesome! 🎉</h2>
 
 <input type="text" id="name" placeholder="Your Name">
 
 <input type="number" id="people" placeholder="Number of people joining">
 
-<button onclick="send()">Submit</button>
+<button class="submit" id="submitBtn" onclick="send()">Submit</button>
 
+</div>
+
+<!-- FINAL MESSAGE -->
+
+<div id="step3" style="display:none">
 <p id="msg"></p>
+</div>
 
 </div>
 
 <script>
 
+function coming(){
+
+document.getElementById("step1").style.display="none";
+document.getElementById("step2").style.display="block";
+
+}
+
+function notcoming(){
+
+document.getElementById("step1").style.display="none";
+document.getElementById("step3").style.display="block";
+
+document.getElementById("msg").innerHTML =
+"Thanks for letting us know! We'll miss you... but we'll eat your share of the cake 🍰";
+
+}
+
 function send(){
 
 var name=document.getElementById("name").value;
 var people=document.getElementById("people").value;
+
+document.getElementById("submitBtn").innerHTML="Submitting...";
 
 fetch("https://script.google.com/macros/s/AKfycby-kbv-Rw9SI0MH6p68MAZcUJtKuCRmeeiAGOtFR9ZkTFaEX-rcUnB_pxiesFKPq18/exec",{
 method:"POST",
@@ -113,7 +150,13 @@ body:new URLSearchParams({
 })
 .then(res=>res.text())
 .then(data=>{
-document.getElementById("msg").innerHTML="Thank you! Your response has been recorded.";
+
+document.getElementById("step2").style.display="none";
+document.getElementById("step3").style.display="block";
+
+document.getElementById("msg").innerHTML =
+"See you on May 3rd! 🎉 Don't forget your dancing shoes 🕺💃";
+
 });
 
 }
