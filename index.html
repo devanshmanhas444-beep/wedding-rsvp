@@ -16,7 +16,7 @@ justify-content:center;
 align-items:center;
 overflow:hidden;
 
-/* fallback image if video doesn't load */
+/* fallback background */
 background-image:url("background.jpeg");
 background-size:cover;
 background-position:center;
@@ -34,34 +34,7 @@ object-fit:cover;
 z-index:-1;
 }
 
-/* Floating hearts */
-
-.heart{
-position:fixed;
-bottom:-10px;
-font-size:20px;
-animation:float 10s linear infinite;
-opacity:0.6;
-pointer-events:none;
-}
-
-@keyframes float{
-0%{
-transform:translateY(0);
-opacity:0;
-}
-
-50%{
-opacity:1;
-}
-
-100%{
-transform:translateY(-100vh);
-opacity:0;
-}
-}
-
-/* Main box */
+/* RSVP box */
 
 .box{
 background:rgba(255,255,255,0.92);
@@ -126,10 +99,9 @@ color:#8B0000;
 
 <!-- VIDEO BACKGROUND -->
 
-<video autoplay muted loop playsinline id="bgvideo">
+<video autoplay muted loop playsinline webkit-playsinline id="bgvideo">
 <source src="wedding.mp4" type="video/mp4">
 </video>
-
 
 <div class="box">
 
@@ -168,26 +140,25 @@ color:#8B0000;
 
 <script>
 
-/* Floating hearts */
+/* Force video play on mobile */
 
-setInterval(function(){
+window.addEventListener("load", function(){
 
-var heart=document.createElement("div");
+var video=document.getElementById("bgvideo");
 
-heart.className="heart";
-heart.innerHTML="❤️";
+var playPromise=video.play();
 
-heart.style.left=Math.random()*100+"%";
-heart.style.fontSize=(Math.random()*20+15)+"px";
+if(playPromise!==undefined){
+playPromise.catch(function(){
+video.muted=true;
+video.play();
+});
+}
 
-document.body.appendChild(heart);
-
-setTimeout(()=>heart.remove(),10000);
-
-},800);
+});
 
 
-/* YES button */
+/* YES */
 
 function coming(){
 
@@ -197,7 +168,7 @@ document.getElementById("step2").style.display="block";
 }
 
 
-/* NO button */
+/* NO */
 
 function notcoming(){
 
@@ -212,7 +183,6 @@ document.getElementById("step1").style.display="none";
 document.getElementById("step3").style.display="block";
 
 var noJokes=[
-
 "We'll miss you... but we'll eat your cake 🍰",
 "More dancing space for us 💃",
 "The cake will remember this!",
@@ -223,7 +193,6 @@ var noJokes=[
 "Your dance moves will be missed!",
 "The DJ will still play your song!",
 "Sad... but we'll survive!"
-
 ];
 
 var joke=noJokes[Math.floor(Math.random()*noJokes.length)];
@@ -256,7 +225,6 @@ document.getElementById("step2").style.display="none";
 document.getElementById("step3").style.display="block";
 
 var normalJokes=[
-
 "See you May 3rd! Bring dancing shoes 🕺",
 "Prepare for legendary dance moves 💃",
 "Come hungry... cake awaits 🍰",
@@ -267,11 +235,9 @@ var normalJokes=[
 "Dance floor legend incoming!",
 "Your seat is ready!",
 "Let the celebration begin!"
-
 ];
 
 var bigGroupJokes=[
-
 "Wow bringing the whole squad! 🎉",
 "We'll need extra cake!",
 "That's a full table right there!",
@@ -282,19 +248,14 @@ var bigGroupJokes=[
 "This wedding just got louder!",
 "More guests = more fun!",
 "Now THIS is a party!"
-
 ];
 
 var message;
 
 if(people>4){
-
 message=bigGroupJokes[Math.floor(Math.random()*bigGroupJokes.length)];
-
 }else{
-
 message=normalJokes[Math.floor(Math.random()*normalJokes.length)];
-
 }
 
 document.getElementById("msg").innerHTML=message;
