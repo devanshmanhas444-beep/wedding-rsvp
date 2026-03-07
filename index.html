@@ -16,27 +16,17 @@ justify-content:center;
 align-items:center;
 overflow:hidden;
 
+/* IMAGE BACKGROUND */
 background-image:url("background.jpeg");
 background-size:cover;
 background-position:center;
-}
-
-/* VIDEO BACKGROUND */
-
-#bgvideo{
-position:fixed;
-top:0;
-left:0;
-min-width:100%;
-min-height:100%;
-object-fit:cover;
-z-index:-1;
+background-repeat:no-repeat;
 }
 
 /* GLASS BOX */
 
 .box{
-background:rgba(255,255,255,0.25); /* MORE TRANSPARENT */
+background:rgba(255,255,255,0.25);
 width:90%;
 max-width:420px;
 padding:40px;
@@ -99,12 +89,6 @@ color:#8B0000;
 
 <body>
 
-<!-- VIDEO BACKGROUND -->
-
-<video autoplay muted loop playsinline webkit-playsinline id="bgvideo">
-<source src="wedding.mp4" type="video/mp4">
-</video>
-
 <div class="box">
 
 <div id="step1">
@@ -134,23 +118,6 @@ color:#8B0000;
 
 <script>
 
-/* MOBILE VIDEO FIX */
-
-window.addEventListener("load",function(){
-
-var video=document.getElementById("bgvideo");
-
-var playPromise=video.play();
-
-if(playPromise!==undefined){
-playPromise.catch(function(){
-video.muted=true;
-video.play();
-});
-}
-
-});
-
 /* YES */
 
 function coming(){
@@ -163,8 +130,6 @@ document.getElementById("step2").style.display="block";
 /* NO */
 
 function notcoming(){
-
-document.getElementById("bgvideo").style.display="none";
 
 /* MULTIPLE GIF OPTIONS */
 
