@@ -15,18 +15,23 @@ display:flex;
 justify-content:center;
 align-items:center;
 overflow:hidden;
+
+/* fallback image if video doesn't load */
+background-image:url("background.jpeg");
+background-size:cover;
+background-position:center;
 }
 
 /* VIDEO BACKGROUND */
 
 #bgvideo{
 position:fixed;
-right:0;
-bottom:0;
+top:0;
+left:0;
 min-width:100%;
 min-height:100%;
-z-index:-1;
 object-fit:cover;
+z-index:-1;
 }
 
 /* Floating hearts */
@@ -35,18 +40,28 @@ object-fit:cover;
 position:fixed;
 bottom:-10px;
 font-size:20px;
-animation: float 10s linear infinite;
+animation:float 10s linear infinite;
 opacity:0.6;
 pointer-events:none;
 }
 
 @keyframes float{
-0%{transform:translateY(0);opacity:0;}
-50%{opacity:1;}
-100%{transform:translateY(-100vh);opacity:0;}
+0%{
+transform:translateY(0);
+opacity:0;
 }
 
-/* Main RSVP box */
+50%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-100vh);
+opacity:0;
+}
+}
+
+/* Main box */
 
 .box{
 background:rgba(255,255,255,0.92);
@@ -111,9 +126,10 @@ color:#8B0000;
 
 <!-- VIDEO BACKGROUND -->
 
-<video autoplay muted loop id="bgvideo">
+<video autoplay muted loop playsinline id="bgvideo">
 <source src="wedding.mp4" type="video/mp4">
 </video>
+
 
 <div class="box">
 
@@ -125,6 +141,7 @@ color:#8B0000;
 <button class="yes" onclick="coming()">Yes, I'll be there!</button>
 <button class="no" onclick="notcoming()">Sadly no 😢</button>
 </div>
+
 
 <!-- STEP 2 -->
 
@@ -139,6 +156,7 @@ color:#8B0000;
 <button class="submit" id="submitBtn" onclick="send()">Submit</button>
 
 </div>
+
 
 <!-- FINAL MESSAGE -->
 
@@ -155,6 +173,7 @@ color:#8B0000;
 setInterval(function(){
 
 var heart=document.createElement("div");
+
 heart.className="heart";
 heart.innerHTML="❤️";
 
@@ -168,15 +187,17 @@ setTimeout(()=>heart.remove(),10000);
 },800);
 
 
-/* YES */
+/* YES button */
 
 function coming(){
+
 document.getElementById("step1").style.display="none";
 document.getElementById("step2").style.display="block";
+
 }
 
 
-/* NO */
+/* NO button */
 
 function notcoming(){
 
@@ -191,6 +212,7 @@ document.getElementById("step1").style.display="none";
 document.getElementById("step3").style.display="block";
 
 var noJokes=[
+
 "We'll miss you... but we'll eat your cake 🍰",
 "More dancing space for us 💃",
 "The cake will remember this!",
@@ -201,6 +223,7 @@ var noJokes=[
 "Your dance moves will be missed!",
 "The DJ will still play your song!",
 "Sad... but we'll survive!"
+
 ];
 
 var joke=noJokes[Math.floor(Math.random()*noJokes.length)];
@@ -233,6 +256,7 @@ document.getElementById("step2").style.display="none";
 document.getElementById("step3").style.display="block";
 
 var normalJokes=[
+
 "See you May 3rd! Bring dancing shoes 🕺",
 "Prepare for legendary dance moves 💃",
 "Come hungry... cake awaits 🍰",
@@ -243,9 +267,11 @@ var normalJokes=[
 "Dance floor legend incoming!",
 "Your seat is ready!",
 "Let the celebration begin!"
+
 ];
 
 var bigGroupJokes=[
+
 "Wow bringing the whole squad! 🎉",
 "We'll need extra cake!",
 "That's a full table right there!",
@@ -256,14 +282,19 @@ var bigGroupJokes=[
 "This wedding just got louder!",
 "More guests = more fun!",
 "Now THIS is a party!"
+
 ];
 
 var message;
 
 if(people>4){
+
 message=bigGroupJokes[Math.floor(Math.random()*bigGroupJokes.length)];
+
 }else{
+
 message=normalJokes[Math.floor(Math.random()*normalJokes.length)];
+
 }
 
 document.getElementById("msg").innerHTML=message;
@@ -275,5 +306,4 @@ document.getElementById("msg").innerHTML=message;
 </script>
 
 </body>
-
 </html>
