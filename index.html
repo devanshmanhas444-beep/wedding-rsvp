@@ -13,14 +13,60 @@ font-family:Arial;
 height:100vh;
 
 background-image:url("background.jpeg");
-background-size:cover;
+background-size:110%;
 background-position:center;
 background-repeat:no-repeat;
+
+animation: slowZoom 25s infinite alternate;
 
 display:flex;
 justify-content:center;
 align-items:center;
+overflow:hidden;
 }
+
+/* Background zoom animation */
+
+@keyframes slowZoom{
+0%{
+background-size:110%;
+background-position:center;
+}
+
+100%{
+background-size:125%;
+background-position:top;
+}
+}
+
+/* Floating hearts */
+
+.heart{
+position:fixed;
+bottom:-10px;
+font-size:20px;
+animation: float 10s linear infinite;
+opacity:0.6;
+pointer-events:none;
+}
+
+@keyframes float{
+0%{
+transform:translateY(0);
+opacity:0;
+}
+
+50%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-100vh);
+opacity:0;
+}
+}
+
+/* Main box */
 
 .box{
 background:rgba(255,255,255,0.92);
@@ -56,19 +102,18 @@ font-size:16px;
 cursor:pointer;
 }
 
-/* YES BUTTON */
+/* Buttons */
+
 .yes{
 background:#8B0000;
 color:white;
 }
 
-/* NO BUTTON */
 .no{
 background:#b22222;
 color:white;
 }
 
-/* SUBMIT BUTTON */
 .submit{
 background:#a0003a;
 color:white;
@@ -122,22 +167,63 @@ color:#8B0000;
 
 <script>
 
-function coming(){
+/* Floating hearts generator */
 
+setInterval(function(){
+
+var heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"%";
+heart.style.fontSize=(Math.random()*20+15)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),10000);
+
+},800);
+
+
+/* YES button */
+
+function coming(){
 document.getElementById("step1").style.display="none";
 document.getElementById("step2").style.display="block";
-
 }
 
+
+/* NO button */
+
 function notcoming(){
+
+document.body.style.backgroundImage =
+"url('https://media.giphy.com/media/OPU6wzx8JrHna/giphy.gif')";
 
 document.getElementById("step1").style.display="none";
 document.getElementById("step3").style.display="block";
 
-document.getElementById("msg").innerHTML =
-"Thanks for letting us know! We'll miss you... but we'll eat your share of the cake 🍰";
+var noJokes=[
+"We'll miss you... but we'll eat your cake 🍰",
+"More dancing space for us 💃",
+"The cake will remember this!",
+"Your chair will feel very empty 😢",
+"No worries, we'll party extra hard!",
+"We forgive you... maybe 😅",
+"We'll send pictures of the cake you missed!",
+"Your dance moves will be missed!",
+"The DJ will still play your song!",
+"Sad... but we'll survive!"
+];
+
+var joke=noJokes[Math.floor(Math.random()*noJokes.length)];
+
+document.getElementById("msg").innerHTML=joke;
 
 }
+
+
+/* SUBMIT */
 
 function send(){
 
@@ -159,8 +245,45 @@ body:new URLSearchParams({
 document.getElementById("step2").style.display="none";
 document.getElementById("step3").style.display="block";
 
-document.getElementById("msg").innerHTML =
-"See you on May 3rd! 🎉 Don't forget your dancing shoes 🕺💃";
+var normalJokes=[
+"See you May 3rd! Bring dancing shoes 🕺",
+"Prepare for legendary dance moves 💃",
+"Come hungry... cake awaits 🍰",
+"The DJ has been warned about you 😄",
+"Wedding memories loading...",
+"Party mode activated!",
+"Hope you're ready for great food!",
+"Dance floor legend incoming!",
+"Your seat is ready!",
+"Let the celebration begin!"
+];
+
+var bigGroupJokes=[
+"Wow bringing the whole squad! 🎉",
+"We'll need extra cake!",
+"That's a full table right there!",
+"Party level just increased!",
+"The squad is coming!",
+"Looks like VIP guests arrived!",
+"The dance floor just got crowded!",
+"This wedding just got louder!",
+"More guests = more fun!",
+"Now THIS is a party!"
+];
+
+var message;
+
+if(people>4){
+
+message=bigGroupJokes[Math.floor(Math.random()*bigGroupJokes.length)];
+
+}else{
+
+message=normalJokes[Math.floor(Math.random()*normalJokes.length)];
+
+}
+
+document.getElementById("msg").innerHTML=message;
 
 });
 
