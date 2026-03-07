@@ -16,7 +16,6 @@ justify-content:center;
 align-items:center;
 overflow:hidden;
 
-/* fallback background */
 background-image:url("background.jpeg");
 background-size:cover;
 background-position:center;
@@ -34,16 +33,19 @@ object-fit:cover;
 z-index:-1;
 }
 
-/* RSVP box */
+/* GLASS BOX */
 
 .box{
-background:rgba(255,255,255,0.92);
+background:rgba(255,255,255,0.45);
 width:90%;
 max-width:420px;
 padding:40px;
 border-radius:15px;
 box-shadow:0 10px 30px rgba(0,0,0,0.4);
 text-align:center;
+
+backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);
 }
 
 h2{
@@ -105,17 +107,12 @@ color:#8B0000;
 
 <div class="box">
 
-<!-- STEP 1 -->
-
 <div id="step1">
 <h2>Are you coming to the wedding on May 3rd? 💍</h2>
 
 <button class="yes" onclick="coming()">Yes, I'll be there!</button>
 <button class="no" onclick="notcoming()">Sadly no 😢</button>
 </div>
-
-
-<!-- STEP 2 -->
 
 <div id="step2" style="display:none">
 
@@ -129,9 +126,6 @@ color:#8B0000;
 
 </div>
 
-
-<!-- FINAL MESSAGE -->
-
 <div id="step3" style="display:none">
 <p id="msg"></p>
 </div>
@@ -140,9 +134,9 @@ color:#8B0000;
 
 <script>
 
-/* Force video play on mobile */
+/* MOBILE VIDEO FIX */
 
-window.addEventListener("load", function(){
+window.addEventListener("load",function(){
 
 var video=document.getElementById("bgvideo");
 
@@ -157,7 +151,6 @@ video.play();
 
 });
 
-
 /* YES */
 
 function coming(){
@@ -167,22 +160,37 @@ document.getElementById("step2").style.display="block";
 
 }
 
-
 /* NO */
 
 function notcoming(){
 
 document.getElementById("bgvideo").style.display="none";
 
-document.body.style.backgroundImage=
-"url('https://media.giphy.com/media/OPU6wzx8JrHna/giphy.gif')";
+/* MULTIPLE GIF OPTIONS */
 
+var gifs=[
+
+"https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif",
+"https://media.giphy.com/media/3o6ZtaO9BZHcOjmErm/giphy.gif",
+"https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif",
+"https://media.giphy.com/media/OPU6wzx8JrHna/giphy.gif",
+"https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
+
+];
+
+/* RANDOM GIF */
+
+var gif=gifs[Math.floor(Math.random()*gifs.length)];
+
+document.body.style.backgroundImage="url('"+gif+"')";
 document.body.style.backgroundSize="cover";
+document.body.style.backgroundPosition="center";
 
 document.getElementById("step1").style.display="none";
 document.getElementById("step3").style.display="block";
 
 var noJokes=[
+
 "We'll miss you... but we'll eat your cake 🍰",
 "More dancing space for us 💃",
 "The cake will remember this!",
@@ -193,6 +201,7 @@ var noJokes=[
 "Your dance moves will be missed!",
 "The DJ will still play your song!",
 "Sad... but we'll survive!"
+
 ];
 
 var joke=noJokes[Math.floor(Math.random()*noJokes.length)];
@@ -200,7 +209,6 @@ var joke=noJokes[Math.floor(Math.random()*noJokes.length)];
 document.getElementById("msg").innerHTML=joke;
 
 }
-
 
 /* SUBMIT */
 
@@ -225,6 +233,7 @@ document.getElementById("step2").style.display="none";
 document.getElementById("step3").style.display="block";
 
 var normalJokes=[
+
 "See you May 3rd! Bring dancing shoes 🕺",
 "Prepare for legendary dance moves 💃",
 "Come hungry... cake awaits 🍰",
@@ -235,9 +244,11 @@ var normalJokes=[
 "Dance floor legend incoming!",
 "Your seat is ready!",
 "Let the celebration begin!"
+
 ];
 
 var bigGroupJokes=[
+
 "Wow bringing the whole squad! 🎉",
 "We'll need extra cake!",
 "That's a full table right there!",
@@ -248,6 +259,7 @@ var bigGroupJokes=[
 "This wedding just got louder!",
 "More guests = more fun!",
 "Now THIS is a party!"
+
 ];
 
 var message;
